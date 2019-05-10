@@ -282,12 +282,17 @@ export class BranchesContainer extends React.Component<
     this.props.dispatcher.createPullRequest(this.props.repository)
   }
 
-  private onPullRequestClicked = (pullRequest: PullRequest) => {
+  private onPullRequestClicked = async (pullRequest: PullRequest) => {
     this.props.dispatcher.closeFoldout(FoldoutType.Branch)
-    this.props.dispatcher.checkoutPullRequest(
+    const timer = startTimer(
+      'checkout pull request from list',
+      this.props.repository
+    )
+    await this.props.dispatcher.checkoutPullRequest(
       this.props.repository,
       pullRequest
     )
+    timer.done()
 
     this.onPullRequestSelectionChanged(pullRequest)
   }
