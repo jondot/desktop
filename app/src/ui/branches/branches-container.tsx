@@ -21,6 +21,7 @@ import { PullRequestList } from './pull-request-list'
 import { IBranchListItem } from './group-branches'
 import { renderDefaultBranch } from './branch-renderer'
 import { IMatches } from '../../lib/fuzzy-find'
+import { startTimer } from '../lib/timing'
 
 interface IBranchesContainerProps {
   readonly dispatcher: Dispatcher
@@ -230,13 +231,18 @@ export class BranchesContainer extends React.Component<
     })
   }
 
-  private onBranchItemClick = (branch: Branch) => {
+  private onBranchItemClick = async (branch: Branch) => {
     this.props.dispatcher.closeFoldout(FoldoutType.Branch)
 
     const currentBranch = this.props.currentBranch
 
     if (currentBranch == null || currentBranch.name !== branch.name) {
-      this.props.dispatcher.checkoutBranch(this.props.repository, branch)
+      const action = startTimer(
+        'checkout branch from list',
+        this.props.repository
+      )
+      await this.props.dispatcher.checkoutBranch(this.props.repository, branch)
+      action.done()
     }
   }
 
