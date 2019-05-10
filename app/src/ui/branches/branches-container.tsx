@@ -237,12 +237,12 @@ export class BranchesContainer extends React.Component<
     const currentBranch = this.props.currentBranch
 
     if (currentBranch == null || currentBranch.name !== branch.name) {
-      const action = startTimer(
+      const timer = startTimer(
         'checkout branch from list',
         this.props.repository
       )
       await this.props.dispatcher.checkoutBranch(this.props.repository, branch)
-      action.done()
+      timer.done()
     }
   }
 

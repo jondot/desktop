@@ -215,9 +215,9 @@ export class CommitMessage extends React.Component<
       trailers,
     }
 
-    const action = startTimer('create commit', this.props.repository)
+    const timer = startTimer('create commit', this.props.repository)
     const commitCreated = await this.props.onCreateCommit(commitContext)
-    action.done()
+    timer.done()
 
     if (commitCreated) {
       this.clearCommitMessage()

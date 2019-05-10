@@ -150,9 +150,9 @@ export class StashAndSwitchBranch extends React.Component<
     this.setState({ isStashingChanges: true })
 
     try {
-      const action = startTimer('stash and checkout', repository)
+      const timer = startTimer('stash and checkout', repository)
       await this.stashAndCheckout()
-      action.done()
+      timer.done()
     } finally {
       this.setState({ isStashingChanges: false }, () => {
         this.props.onDismissed()

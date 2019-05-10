@@ -8,6 +8,7 @@ function onCompleted(startTime: number, messagePrefix: string): () => void {
     log.info(message)
   }
 }
+
 /**
  * Obtain a timer to measure a unit of work being performed on behalf of the
  * user.
@@ -23,7 +24,6 @@ function onCompleted(startTime: number, messagePrefix: string): () => void {
  * adding noise to the log output by adding unimportant timing information.**
  *
  */
-
 export function startTimer(action: string, repository: Repository) {
   const startTime = performance && performance.now ? performance.now() : null
 

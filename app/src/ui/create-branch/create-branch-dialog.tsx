@@ -294,14 +294,14 @@ export class CreateBranch extends React.Component<
 
     if (name.length > 0) {
       this.setState({ isCreatingBranch: true })
-      const action = startTimer('create branch', this.props.repository)
+      const timer = startTimer('create branch', this.props.repository)
       await this.props.dispatcher.createBranch(
         this.props.repository,
         name,
         startPoint,
         UncommittedChangesStrategy.askForConfirmation
       )
-      action.done()
+      timer.done()
     }
   }
 }
