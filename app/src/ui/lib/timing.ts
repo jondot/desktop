@@ -24,7 +24,7 @@ function onCompleted(startTime: number, messagePrefix: string): () => void {
  *
  */
 
-export function startTimer(task: string, repository: Repository) {
+export function startTimer(action: string, repository: Repository) {
   const startTime = performance && performance.now ? performance.now() : null
 
   if (startTime === null) {
@@ -36,7 +36,7 @@ export function startTimer(task: string, repository: Repository) {
     }
   }
 
-  const messagePrefix = `Action '${task}' for '${nameOf(repository)}'`
+  const messagePrefix = `Action '${action}' for '${nameOf(repository)}'`
 
   return {
     done: onCompleted(startTime, messagePrefix),
