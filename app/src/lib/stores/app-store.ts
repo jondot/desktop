@@ -225,6 +225,7 @@ import { IStashEntry, StashedChangesLoadStates } from '../../models/stash-entry'
 import { RebaseFlowStep, RebaseStep } from '../../models/rebase-flow-step'
 import { arrayEquals } from '../equality'
 import { MenuLabelsEvent } from '../../models/menu-labels'
+import { PromiseCache } from '../promise-cache'
 
 /**
  * As fast-forwarding local branches is proportional to the number of local
@@ -360,6 +361,12 @@ export class AppStore extends TypedBaseStore<IAppState> {
   private selectedBranchesTab = BranchesTab.Branches
   private selectedTheme = ApplicationTheme.Light
   private automaticallySwitchTheme = false
+
+  private readonly refreshPromisesCache = new PromiseCache<Repository, void>(
+    'refresh',
+    r => r.hash,
+    r => this.actuallyRefreshRepository(r)
+  )
 
   public constructor(
     private readonly gitHubUserStore: GitHubUserStore,
@@ -2440,7 +2447,9 @@ export class AppStore extends TypedBaseStore<IAppState> {
     return repository
   }
 
-  private async refreshRepository(repository: Repository): Promise<void> {}
+  private async refreshRepository(repository: Repository): Promise<void> {
+    return this.refreshPromisesCache.get(repository)
+  }
 
   private async actuallyRefreshRepository(
     repository: Repository
