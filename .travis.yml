@@ -1,34 +1,12 @@
-notifications:
-  email:
-    on_success: never
-    on_failure: change
-
 dist: trusty
-
 os: linux
-compiler: clang
-
-env:
-  - CC=clang CXX=clang++ npm_config_clang=1
-
-addons:
-  apt:
-    packages:
-      # this is required to compile keytar
-      - libsecret-1-dev
-      # this package is essential for testing Electron in a headless fashion
-      # https://github.com/electron/electron/blob/master/docs/tutorial/testing-on-headless-ci.md
-      - xvfb
+language: node_js
+node_js:
+  - '8.12'
 
 branches:
   only:
     - development
-    - /releases\/.+/
-    - /^__release-.*/
-
-language: node_js
-node_js:
-  - '8.12'
 
 cache:
   yarn: true
@@ -42,12 +20,4 @@ install:
   - yarn install --force
 
 script:
-  - yarn lint && yarn validate-changelog && yarn check-modified && yarn
-    build:prod && yarn test:setup && yarn test
-
-after_success:
-  - yarn test:report
-
-after_failure:
-  - yarn test:report
-  - yarn test:review
+  - ./spectral

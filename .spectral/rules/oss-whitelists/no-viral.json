@@ -1,0 +1,126 @@
+{
+    "rules": [
+        {
+            "id": "OSS0001-1",
+            "name": "MIT-only",
+            "finding": "([^/]+)/[^/]*/[^/]*/package.json",
+            "subject": ".*/([^/]*)/package.json",
+            "description": "Only MIT license allowed",
+            "recommendation_template": "Find replacement software with a more permissive license.",
+            "tags": [
+                "oss",
+                "node"
+            ],
+            "applies_to": [
+                ".*package.json$"
+            ],
+            "severity": "info",
+            "pattern_group": {
+                "aggregate": "or",
+                "scope": "text",
+                "patterns": [
+                    {
+                        "pattern": "(?s)(\"license\": \"[^\"]*\"|\"license\":.*\\{[^}]*\\})",
+                        "pattern_type": "regex",
+                        "pattern_group": {
+                            "aggregate": "and",
+                            "scope": "match",
+                            "patterns": [
+                                {
+                                    "negate": true,
+                                    "hidden_match": true,
+                                    "pattern": "(?m).*MIT.*",
+                                    "pattern_type": "regex"
+                                },
+                                {
+                                    "negate": true,
+                                    "hidden_match": true,
+                                    "pattern": "(?m).*WTFPL.*",
+                                    "pattern_type": "regex"
+                                },
+                                {
+                                    "negate": true,
+                                    "hidden_match": true,
+                                    "pattern": "(?m).*CC0.*",
+                                    "pattern_type": "regex"
+                                },
+                                {
+                                    "negate": true,
+                                    "hidden_match": true,
+                                    "pattern": "(?m).*Unlicense.*",
+                                    "pattern_type": "regex"
+                                },
+                                {
+                                    "negate": true,
+                                    "hidden_match": true,
+                                    "pattern": ".*CC-BY.*",
+                                    "pattern_type": "regex"
+                                },
+                                {
+                                    "negate": true,
+                                    "hidden_match": true,
+                                    "pattern": "(?m).*[Aa]pache.*",
+                                    "pattern_type": "regex"
+                                },
+                                {
+                                    "negate": true,
+                                    "hidden_match": true,
+                                    "pattern": "(?m).*ASL.*",
+                                    "pattern_type": "regex"
+                                },
+                                {
+                                    "negate": true,
+                                    "hidden_match": true,
+                                    "pattern": "(?m).*zlib.*",
+                                    "pattern_type": "regex"
+                                },
+                                {
+                                    "negate": true,
+                                    "hidden_match": true,
+                                    "pattern": "(?m).*ISC.*",
+                                    "pattern_type": "regex"
+                                },
+                                {
+                                    "negate": true,
+                                    "hidden_match": true,
+                                    "pattern": ".*Artistic.*",
+                                    "pattern_type": "regex"
+                                },
+                                {
+                                    "negate": true,
+                                    "hidden_match": true,
+                                    "pattern": "(?m).*BSD.*",
+                                    "pattern_type": "regex"
+                                },
+                                {
+                                    "negate": true,
+                                    "hidden_match": true,
+                                    "pattern": "(?m).*PSF.*",
+                                    "pattern_type": "regex"
+                                },
+                                {
+                                    "negate": true,
+                                    "hidden_match": true,
+                                    "pattern": ".*DBAD.*",
+                                    "pattern_type": "regex"
+                                },
+                                {
+                                    "negate": true,
+                                    "hidden_match": true,
+                                    "pattern": "(?m).*public domain.*",
+                                    "pattern_type": "regex"
+                                },
+                                {
+                                    "negate": true,
+                                    "hidden_match": true,
+                                    "pattern": "(?m).*Python Software Foundation.*",
+                                    "pattern_type": "regex"
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        }
+    ]
+}

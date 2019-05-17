@@ -1,0 +1,17 @@
+reporter:
+    outputs:
+        console: {}
+projects:
+    all_nodes:
+        project:
+            name: nodes
+        input:
+            - local: ../node_modules
+              name: modules
+        rules:
+            roots:
+            - rules
+            include:
+                tags:
+                - node
+                ids: []
